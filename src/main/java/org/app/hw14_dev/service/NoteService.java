@@ -2,7 +2,7 @@ package org.app.hw14_dev.service;
 
 
 import org.app.hw14_dev.model.Note;
-import org.app.hw14_dev.repository.InMemoryNoteRepository;
+import org.app.hw14_dev.repository.NoteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,10 +11,10 @@ import java.util.List;
 @Service
 public class NoteService {
 
-    private final InMemoryNoteRepository inMemoryNoteRepository;
+    private final NoteRepository inMemoryNoteRepository;
 
     @Autowired
-    public NoteService(InMemoryNoteRepository inMemorynoteRepository) {
+    public NoteService(NoteRepository inMemorynoteRepository) {
         this.inMemoryNoteRepository = inMemorynoteRepository;
     }
 
