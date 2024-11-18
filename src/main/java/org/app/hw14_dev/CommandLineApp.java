@@ -4,13 +4,12 @@ import org.app.hw14_dev.model.Note;
 import org.app.hw14_dev.repository.InMemoryNoteRepository;
 import org.app.hw14_dev.service.NoteService;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.stereotype.Component;
 
 /**
  * Class for testing functionality of the application
  */
 
-@Component
+//@Component
 public class CommandLineApp implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
