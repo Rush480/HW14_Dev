@@ -3,17 +3,17 @@ package org.app.hw14_dev.repository;
 import lombok.AllArgsConstructor;
 import org.app.hw14_dev.exception.DatabaseException;
 import org.app.hw14_dev.model.Note;
-import org.springframework.stereotype.Repository;
 
+import java.lang.annotation.Annotation;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import static org.app.hw14_dev.exception.DatabaseException.NOTE_NOT_FOUND;
 
-@Repository
+
 @AllArgsConstructor
-public class InMemoryNoteRepository implements NoteRepository {
+public class NoteRepositoryImpl implements NoteRepository {
     private final Map<Long, Note> database = new HashMap<>();
 
 
@@ -63,4 +63,5 @@ public class InMemoryNoteRepository implements NoteRepository {
     private long randomId() {
         return Math.round(Math.random() * 1000);
     }
+
 }

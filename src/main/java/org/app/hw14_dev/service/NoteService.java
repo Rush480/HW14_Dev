@@ -10,31 +10,31 @@ import java.util.List;
 @Service
 public class NoteService {
 
-    private final NoteRepository inMemoryNoteRepository;
+    private final NoteRepository noteRepository;
 
     @Autowired
-    public NoteService(NoteRepository inMemorynoteRepository) {
-        this.inMemoryNoteRepository = inMemorynoteRepository;
+    public NoteService(NoteRepository noteRepository) {
+        this.noteRepository = noteRepository;
     }
 
     public List<Note> listAll() {
-        return inMemoryNoteRepository.listAll();
+        return noteRepository.listAll();
     }
 
     public Note add(Note note) {
-        return inMemoryNoteRepository.add(note);
+        return noteRepository.add(note);
     }
 
     public void deleteById(long id) {
-        inMemoryNoteRepository.deleteById(id);
+        noteRepository.deleteById(id);
     }
 
     public void update(Note note) {
-        inMemoryNoteRepository.update(note);
+        noteRepository.update(note);
     }
 
     public Note getById(long id) {
-        return inMemoryNoteRepository.getById(id);
+        return noteRepository.getById(id);
     }
 
 }

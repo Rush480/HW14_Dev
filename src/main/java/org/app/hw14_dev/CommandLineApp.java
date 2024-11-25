@@ -1,7 +1,7 @@
 package org.app.hw14_dev;
 
 import org.app.hw14_dev.model.Note;
-import org.app.hw14_dev.repository.InMemoryNoteRepository;
+import org.app.hw14_dev.repository.NoteRepositoryImpl;
 import org.app.hw14_dev.service.NoteService;
 import org.springframework.boot.CommandLineRunner;
 
@@ -13,7 +13,7 @@ import org.springframework.boot.CommandLineRunner;
 public class CommandLineApp implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
-        NoteService noteService = new NoteService(new InMemoryNoteRepository());
+        NoteService noteService = new NoteService(new NoteRepositoryImpl());
 
         // Add test
         noteService.add(Note.builder()
