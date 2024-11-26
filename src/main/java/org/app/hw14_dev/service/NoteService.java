@@ -4,6 +4,7 @@ import org.app.hw14_dev.model.Note;
 import org.app.hw14_dev.repository.NoteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -17,12 +18,13 @@ public class NoteService {
         this.noteRepository = noteRepository;
     }
 
+
     public List<Note> listAll() {
-        return noteRepository.listAll();
+        return noteRepository.findAll();
     }
 
     public Note add(Note note) {
-        return noteRepository.add(note);
+        return noteRepository.save(note);
     }
 
     public void deleteById(long id) {
@@ -30,11 +32,11 @@ public class NoteService {
     }
 
     public void update(Note note) {
-        noteRepository.update(note);
+        noteRepository.save(note);
     }
 
     public Note getById(long id) {
-        return noteRepository.getById(id);
+        return noteRepository.getReferenceById(id);
     }
 
 }

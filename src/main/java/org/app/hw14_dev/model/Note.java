@@ -15,7 +15,7 @@ import lombok.*;
 public class Note {
     @Id
     private long id;
-    @Column(nullable = false, length = 255)
+    @Column(nullable = false)
     private String title;
     @Column(columnDefinition = "TEXT")
     private String content;
