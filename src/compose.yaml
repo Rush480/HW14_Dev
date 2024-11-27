@@ -1,0 +1,15 @@
+services:
+  postgres:
+    image: postgres:15
+    container_name: spring_postgres
+    environment:
+      POSTGRES_DB: mydb
+      POSTGRES_USER: Rush
+      POSTGRES_PASSWORD: rush
+    ports:
+      - "5438:5432"
+    restart: always
+
+volumes:
+  postgres_data:
+    driver: local

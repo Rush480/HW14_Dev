@@ -36,7 +36,7 @@ public class NoteController {
     }
 
     @PostMapping("/delete/{id}")
-    public String deleteNoteAndRedirect(@PathVariable("id") int noteId, RedirectAttributes redirectAttributes) {
+    public String deleteNoteAndRedirect(@PathVariable("id") long noteId, RedirectAttributes redirectAttributes) {
         noteService.deleteById(noteId);
         redirectAttributes.addFlashAttribute("message", "Note deleted successfully");
         return "redirect:/note/list";

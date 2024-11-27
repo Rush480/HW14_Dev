@@ -8,8 +8,5 @@ public class Hw14DevApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(Hw14DevApplication.class, args);
-
-
     }
-
 }
