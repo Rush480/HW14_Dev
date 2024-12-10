@@ -31,6 +31,7 @@ dependencies {
     implementation("org.flywaydb:flyway-core:11.0.0")
     implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.thymeleaf.extras:thymeleaf-extras-springsecurity6")
+    implementation("org.springframework.boot:spring-boot-starter-data-jdbc")
     testImplementation("org.springframework.security:spring-security-test")
     runtimeOnly("org.flywaydb:flyway-database-postgresql:11.0.0")
     implementation("org.postgresql:postgresql:42.7.4")
