@@ -11,7 +11,7 @@ import lombok.*;
 @Table(name = "note")
 public class Note {
     @Id
-    private long id;
+    private Long id;
     @Column(nullable = false)
     private String title;
     @Column(columnDefinition = "TEXT")

@@ -2,31 +2,34 @@ package org.app.hw14_dev.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.app.hw14_dev.model.Note;
+import org.app.hw14_dev.model.dto.request.NoteCreateRequest;
+import org.app.hw14_dev.model.dto.response.NoteResponse;
 import org.app.hw14_dev.service.NoteService;
-import org.springframework.stereotype.Controller;
+
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
-@Controller
-@RequestMapping("/note")
+@RestController
+@RequestMapping("/api/v1/note")
 @RequiredArgsConstructor
 public class NoteController {
     private final NoteService noteService;
 
 
-    @GetMapping("/create")
-    public String createNote(Model model) {
-        model.addAttribute("note", new Note());
-        return "note/createNote";
-    }
+//    @GetMapping("/create")
+//    public String createNote(Model model) {
+//        model.addAttribute("note", new Note());
+//        return "note/createNote";
+//    }
 
     @PostMapping("/create")
-    public String createNoteAndRedirect(Note note, RedirectAttributes redirectAttributes) {
+    public NoteResponse createNote(@RequestBody NoteCreateRequest request) {
+    // TODO implement create note logic
+
         noteService.add(note);
-        redirectAttributes.addFlashAttribute("message", "Note created successfully");
-        return "redirect:/note/list";
+
     }
 
     @GetMapping(value = "/list")

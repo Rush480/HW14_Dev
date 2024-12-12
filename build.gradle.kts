@@ -35,12 +35,6 @@ dependencies {
     testImplementation("org.springframework.security:spring-security-test")
     runtimeOnly("org.flywaydb:flyway-database-postgresql:11.0.0")
     implementation("org.postgresql:postgresql:42.7.4")
-
-
-
-
-
-
     compileOnly("org.projectlombok:lombok")
     annotationProcessor("org.projectlombok:lombok")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
