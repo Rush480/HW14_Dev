@@ -6,55 +6,43 @@ import org.app.hw14_dev.model.dto.request.NoteCreateRequest;
 import org.app.hw14_dev.model.dto.response.NoteResponse;
 import org.app.hw14_dev.service.NoteService;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
 @RestController
-@RequestMapping("/api/v1/note")
+@RequestMapping("/api/v1/notes")
 @RequiredArgsConstructor
 public class NoteController {
     private final NoteService noteService;
 
 
-//    @GetMapping("/create")
-//    public String createNote(Model model) {
-//        model.addAttribute("note", new Note());
-//        return "note/createNote";
+    @PostMapping                     //Done
+    @ResponseStatus(HttpStatus.CREATED)
+    public NoteResponse createNote(@RequestBody NoteCreateRequest request) {
+        return noteService.createNote(request);
+    }
+
+    @GetMapping(value = "/{id}") // Done
+    public NoteResponse findNoteById(@PathVariable("id") Long id) {
+        return noteService.findById(id);
+    }
+
+//    @GetMapping
+//    public NoteResponse getAllNotes() {
+//        return noteService.getAllNotes();
 //    }
 
-    @PostMapping("/create")
-    public NoteResponse createNote(@RequestBody NoteCreateRequest request) {
-    // TODO implement create note logic
+//    @PutMapping(value = "/{id}")
+//    public NoteResponse updateNote(@PathVariable("id") Long id, @RequestBody NoteCreateRequest request) {
+//        return noteService.updateNote(id, request);
+//    }
 
-        noteService.add(note);
-
-    }
-
-    @GetMapping(value = "/list")
-    public String listNotes(Model model) {
-        model.addAttribute("notes", noteService.listAll());
-        return "note/list";
-    }
-
-    @PostMapping("/delete/{id}")
-    public String deleteNoteAndRedirect(@PathVariable("id") long noteId, RedirectAttributes redirectAttributes) {
-        noteService.deleteById(noteId);
-        redirectAttributes.addFlashAttribute("message", "Note deleted successfully");
-        return "redirect:/note/list";
-    }
-
-    @GetMapping("/edit")
-    public String editNotePage(@RequestParam("id") long id, Model model) {
-        model.addAttribute("note", noteService.getById(id));
-        return "note/editNote";
-    }
-
-    @PostMapping("/edit")
-    public String editNote(@ModelAttribute("note") Note note, RedirectAttributes redirectAttributes) {
-        noteService.update(note);
-        redirectAttributes.addFlashAttribute("message", "Note updated successfully");
-        return "redirect:/note/list";
+    @DeleteMapping(value = "/{id}")
+    public void deleteNote(@PathVariable("id") Long id) {
+        noteService.deleteById(id);
     }
 }
