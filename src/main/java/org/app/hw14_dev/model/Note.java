@@ -8,16 +8,22 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "note")
+@Table(name = "notes")
 public class Note {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "note_seq")
-    @SequenceGenerator(name = "note_seq", sequenceName = "note_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "notes_seq")
+    @SequenceGenerator(name = "notes_seq", sequenceName = "notes_seq", allocationSize = 1)
     private Long id;
+
     @Column(nullable = false)
     private String title;
+
     @Column(columnDefinition = "TEXT")
     private String content;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @Override
     public String toString() {

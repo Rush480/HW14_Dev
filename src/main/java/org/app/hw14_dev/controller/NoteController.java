@@ -1,16 +1,12 @@
 package org.app.hw14_dev.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.app.hw14_dev.model.Note;
-import org.app.hw14_dev.model.dto.request.NoteCreateRequest;
+import org.app.hw14_dev.model.dto.request.NoteRequest;
 import org.app.hw14_dev.model.dto.response.NoteResponse;
 import org.app.hw14_dev.service.NoteService;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
 @RestController
@@ -22,8 +18,8 @@ public class NoteController {
 
     @PostMapping                     //Done
     @ResponseStatus(HttpStatus.CREATED)
-    public NoteResponse createNote(@RequestBody NoteCreateRequest request) {
-        return noteService.createNote(request);
+    public NoteResponse createNote(@RequestBody NoteRequest request) {
+        return null;
     }
 
     @GetMapping(value = "/{id}") // Done

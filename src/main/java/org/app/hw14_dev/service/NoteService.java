@@ -2,11 +2,12 @@ package org.app.hw14_dev.service;
 
 import lombok.AllArgsConstructor;
 import org.app.hw14_dev.exception.DatabaseException;
+import org.app.hw14_dev.mapper.NoteMapper;
 import org.app.hw14_dev.model.Note;
-import org.app.hw14_dev.model.dto.request.NoteCreateRequest;
+import org.app.hw14_dev.model.User;
 import org.app.hw14_dev.model.dto.response.NoteResponse;
 import org.app.hw14_dev.repository.NoteRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.app.hw14_dev.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,25 +20,25 @@ import java.util.List;
 public class NoteService {
 
     private final NoteRepository noteRepository;
+    private final UserRepository userRepository;
+    private final NoteMapper noteMapper;
 
-    public List<Note> getAllNotes() {
-        List<Note> notes = noteRepository.findAll();
-        return notes;
+
+
+    public NoteResponse createNote(Long userId, Note note) {
+        User user = userRepository.getReferenceById(userId);
+        note.setUser(user);
+        Note createdNote = noteRepository.save(note);
+        return noteMapper.toNoteResponse(createdNote);
     }
 
-    public NoteResponse createNote(NoteCreateRequest noteRequest) {
-        Note note = Note.builder()
-                .title(noteRequest.title())
-                .content(noteRequest.content())
-                .build();
-        noteRepository.save(note);
-        return NoteResponse.builder()
-                .id(note.getId())
-                .title(note.getTitle())
-                .content(note.getContent())
-                .build();
-    }
+    public List<NoteResponse> getNotesByUserId(Long userId) {
+        List<Note> notes = noteRepository.findByUserId(userId);
 
+        return notes.stream()
+                .map(noteMapper::toNoteResponse)
+                .toList();
+    }
     public void deleteById(long id) {
         noteRepository.deleteById(id);
     }
