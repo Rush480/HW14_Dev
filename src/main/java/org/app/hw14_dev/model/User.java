@@ -38,11 +38,10 @@ public class User {
 
     @ManyToMany
     @Builder.Default
-    @JoinTable(name ="users_roles",
-         joinColumns =@JoinColumn(name="user_id"),
-
-    inverseJoinColumns =
-    @JoinColumn(name = "role_id"))
+    @JoinTable(name = "users_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
     private List<Role> roles = new ArrayList<>();
 
     public void addRole(Role role) {

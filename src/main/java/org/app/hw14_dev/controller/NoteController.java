@@ -5,6 +5,7 @@ import org.app.hw14_dev.model.dto.request.NoteRequest;
 import org.app.hw14_dev.model.dto.response.NoteResponse;
 import org.app.hw14_dev.service.NoteService;
 
+import org.app.hw14_dev.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,13 +15,14 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class NoteController {
     private final NoteService noteService;
+    private final UserService userService;
 
 
-    @PostMapping                     //Done
-    @ResponseStatus(HttpStatus.CREATED)
-    public NoteResponse createNote(@RequestBody NoteRequest request) {
-        return null;
-    }
+//    @PostMapping
+//    @ResponseStatus(HttpStatus.CREATED)
+//    public NoteResponse createNote(@RequestBody NoteRequest request) {
+//        return noteService.createNote();
+//    }
 
     @GetMapping(value = "/{id}") // Done
     public NoteResponse findNoteById(@PathVariable("id") Long id) {

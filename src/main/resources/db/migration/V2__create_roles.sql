@@ -1,4 +1,3 @@
-
 CREATE SEQUENCE IF NOT EXISTS seq_roles_id
     START WITH 1
     INCREMENT BY 1;
@@ -18,3 +17,9 @@ CREATE TABLE IF NOT EXISTS users_roles
     CONSTRAINT fk_users_roles_user_id FOREIGN KEY (user_id) REFERENCES users (id),
     CONSTRAINT fk_users_roles_role_id FOREIGN KEY (role_id) REFERENCES roles (id)
 );
+
+INSERT INTO roles (id,name)
+VALUES (1,'ROLE_USER'),
+       (2,'ROLE_ADMIN');
+
+
