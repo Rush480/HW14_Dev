@@ -1,6 +1,12 @@
 package org.app.hw14_dev.model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -25,5 +31,4 @@ public class Role {
     @ManyToMany(mappedBy = "roles")
     @Builder.Default
     private List<User> users = new ArrayList<>();
-
 }

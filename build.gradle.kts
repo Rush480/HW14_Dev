@@ -40,14 +40,9 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     runtimeOnly("org.springframework.boot:spring-boot-docker-compose")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-
-
     implementation("org.mapstruct:mapstruct:1.6.3")
     annotationProcessor("org.mapstruct:mapstruct-processor:1.5.5.Final")
-
-
     implementation("jakarta.validation:jakarta.validation-api:3.1.0")
-
     implementation("org.hibernate.validator:hibernate-validator:8.0.1.Final")
     // https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-api
     implementation("io.jsonwebtoken:jjwt-api:0.12.3")

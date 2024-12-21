@@ -1,9 +1,8 @@
 package org.app.hw14_dev.service;
 
-
-import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
@@ -11,8 +10,10 @@ import java.util.Date;
 
 @Service
 public class JwtTokenProvider {
-    private final String jwtSecret = "secretKey";
-    private final Long jwtExpiration = 86400000L;
+    @Value("${jwt.secret}")
+    private  String jwtSecret;
+    @Value("${jwt.expiration}")
+    private  Long jwtExpiration;
 
     public String generateToken(Authentication authentication) {
         String username = authentication.getName();

@@ -4,15 +4,18 @@ import lombok.AllArgsConstructor;
 import org.app.hw14_dev.exception.DatabaseException;
 import org.app.hw14_dev.mapper.NoteMapper;
 import org.app.hw14_dev.model.Note;
-import org.app.hw14_dev.model.User;
+import org.app.hw14_dev.model.dto.request.NoteRequest;
 import org.app.hw14_dev.model.dto.response.NoteResponse;
 import org.app.hw14_dev.repository.NoteRepository;
-import org.app.hw14_dev.repository.UserRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import static org.app.hw14_dev.exception.DatabaseException.NOTE_NOT_FOUND;
 
-import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -20,44 +23,43 @@ import java.util.List;
 public class NoteService {
 
     private final NoteRepository noteRepository;
-    private final UserRepository userRepository;
+    private final UserService userService;
     private final NoteMapper noteMapper;
 
 
 
-    public NoteResponse createNote(Long userId, Note note) {
-        User user = userRepository.getReferenceById(userId);
-        note.setUser(user);
-        Note createdNote = noteRepository.save(note);
+
+    public NoteResponse createNote(NoteRequest note) {
+        String username = getCurrentUserName();
+        Note createdNote = Note.builder()
+                .title(note.getTitle())
+                .content(note.getContent())
+                .user(userService.findByUserName(username))
+                .build();
+        noteRepository.save(createdNote);
         return noteMapper.toNoteResponse(createdNote);
     }
 
-    public List<NoteResponse> getNotesByUserId(Long userId) {
-        List<Note> notes = noteRepository.findByUserId(userId);
-
-        return notes.stream()
-                .map(noteMapper::toNoteResponse)
-                .toList();
-    }
     public void deleteById(long id) {
         noteRepository.deleteById(id);
     }
 
-    public void update(Note note) {
-        if (note.getId() == 0) {
-            throw new DatabaseException(DatabaseException.NOTE_NOT_FOUND + note.getId());
-        }
-        noteRepository.save(note);
-    }
-
-    public NoteResponse findById(long id) {
-        Note note = noteRepository.getReferenceById(id);
-        return NoteResponse.builder()
-                .id(note.getId())
-                .title(note.getTitle())
-                .content(note.getContent())
-                .build();
+    public NoteResponse update(NoteRequest noteRequest, long id) {
+     Note note = noteRepository.findById(id).orElseThrow(() -> new DatabaseException(NOTE_NOT_FOUND + id));
+     note.setTitle(noteRequest.getTitle());
+     note.setContent(noteRequest.getContent());
+     noteRepository.save(note);
+     return noteMapper.toNoteResponse(note);
     }
 
 
+    public Page<NoteResponse> findAll(PageRequest pageRequest) {
+       return noteRepository.findNotesByUser(userService.findByUserName(getCurrentUserName()),pageRequest)
+                .map(noteMapper::toNoteResponse);
+    }
+
+    private static String getCurrentUserName() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return authentication.getName();
+    }
 }

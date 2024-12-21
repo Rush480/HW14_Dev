@@ -8,10 +8,6 @@ import org.app.hw14_dev.model.dto.request.UserRequest;
 import org.app.hw14_dev.model.dto.response.UserResponse;
 import org.app.hw14_dev.repository.RoleRepository;
 import org.app.hw14_dev.repository.UserRepository;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,8 +20,7 @@ public class UserService {
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
     private final RoleRepository roleRepository;
-    private final AuthenticationManager authenticationManager;
-    private final JwtTokenProvider jwtTokenProvider;
+
 
     public UserResponse getUserById(Long id) {
         User user = userRepository.findById(id)
@@ -34,7 +29,8 @@ public class UserService {
     }
 
     public String createUser(UserRequest userRequest) {
-        if (userRepository.existsByUserName(userRequest.getUsername())) {
+        if (userRepository.existsByUserName(userRequest.getUsername()) ||
+                userRepository.existsByEmail(userRequest.getEmail())) {
             return "User already exists";
         }
         User user = User.builder()
@@ -54,11 +50,5 @@ public class UserService {
                 .orElseThrow(() -> new EntityNotFoundException("User not found"));
     }
 
-    public String authenticateUser(UserRequest userRequest) {
-        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userRequest.getUsername(), userRequest.getPassword())
-        );
 
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        return jwtTokenProvider.generateToken(authentication);
-    }
 }
