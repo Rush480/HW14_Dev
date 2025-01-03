@@ -46,14 +46,14 @@ public class NoteController {
 
     @DeleteMapping("/{id}") // DELETE -> http://localhost:8080/api/v1/notes/{id}
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @PreAuthorize("@securityService.isUserMatchesPrincipal(#id)")
+    @PreAuthorize("@securityService.isNoteCreatedByPrincipal(#id)")
     public String deleteNoteById(@PathVariable Long id) {
         noteService.deleteById(id);
         return "Note deleted";
     }
 
     @PutMapping(value = "/{id}") // PUT -> http://localhost:8080/api/v1/notes/{id}
-    @PreAuthorize("@securityService.isUserMatchesPrincipal(#id)")
+    @PreAuthorize("@securityService.isNoteCreatedByPrincipal(#id)")
     public NoteResponse editNoteById(@PathVariable Long id,
                                      @RequestBody NoteRequest noteRequest) {
         return noteService.update(noteRequest, id);
