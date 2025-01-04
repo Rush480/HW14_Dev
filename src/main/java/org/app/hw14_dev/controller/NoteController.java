@@ -37,7 +37,7 @@ public class NoteController {
         return noteService.createNote(request);
     }
 
-    @GetMapping // Peageble GET -> http://localhost:8080/api/v1/notes?page=0&size=10
+    @GetMapping // Pageable GET -> http://localhost:8080/api/v1/notes?page=0&size=10
     public Page<NoteResponse> getAllNotes(@RequestParam(defaultValue = "0") int page,
                                           @RequestParam(defaultValue = "10") int size) {
         PageRequest pageRequest = PageRequest.of(page, size);
